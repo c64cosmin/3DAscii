@@ -1,0 +1,8 @@
+3DAscii
+
+This software can be used to render .obj files as XPM,PPM images,
+or it can render in real time inside the terminal.
+
+The .obj files need to contain UV and normal information.
+
+Use `./3DAscii` to find out info about how to run the software.
