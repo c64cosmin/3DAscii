@@ -15,7 +15,7 @@ public:
     ~Ascii();
     void bitblit(ColorGenerator* generator);
     void doSomething(int t=0);
-    void doPlasma();
+    void doPlasma(int t,ColorGenerator* generator);
     double func(int x,int y,int t);
     double func2(int x,int y,int t,double n);
     void setNoDepth(bool s){noDepth=s;}

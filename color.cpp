@@ -12,7 +12,9 @@ Ascii::Ascii(int sizeX,int sizeY,const char* model){
     noDepth=false;
     initMap();
     render=new Render(sizeX,sizeY);
-    obj=OBJMesh(model);
+    if(model != nullptr){
+        obj=OBJMesh(model);
+    }
 }
 
 Ascii::~Ascii(){
@@ -49,10 +51,6 @@ void Ascii::bitblit(ColorGenerator* generator){
 double Ascii::func(int i,int j,int t){
     int x=cos(t*0.01)*sizeX/2+sizeX/2;
     int y=sin(t*0.01)*sizeX/2+sizeY/2;
-    if(x<0)x=0;
-    if(x>sizeX)x=sizeX;
-    if(y<0)y=0;
-    if(y>sizeY)y=sizeY;
     double c=0;
     c+=cos(t*0.01+sqrt((sizeX/2-i)*(sizeX/2-i)+(sizeY/2-j)*(sizeY/2-j))*0.5);
     c+=cos(-t*0.1+sqrt((x-i)*(x-i)+(y-j)*(y-j))*0.5);
@@ -99,10 +97,10 @@ void Ascii::doSomething(int t){
     }
 }
 
-void Ascii::doPlasma(){
-    int t=100;
+void Ascii::doPlasma(int t,ColorGenerator* generator){
     for(int j=0;j<this->sizeY;j++)
     for(int i=0;i<this->sizeX;i++){
+        int y=j*17/8;
     /*
         putColor(i,j,
                  func2(i,j,t,0.01),
@@ -110,11 +108,12 @@ void Ascii::doPlasma(){
                  func2(i,j,t*3,0.03));
     //*/
         putColor(vec4(i,j,0.0,0.0),
-                 vec4(func(i,j,t),
-                      func(i,j,t*2),
-                      func(i,j,t*3),
+                 vec4(func(i,y,t),
+                      func(i,y,t*2),
+                      func(i,y,t*3),
                       0.0));
     }
+    generator->output(sizeX,sizeY,bitmap);
 }
 
 void Ascii::putColorZ(vec4 position,vec4 color){

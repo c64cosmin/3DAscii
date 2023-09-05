@@ -26,8 +26,21 @@ int main (int argc, char **argv)
         gfx.bitblit(&generator);
         return 0;
     #endif
+
+    if(argc==2 && std::string(argv[1]).compare("plasma")==0){
+        int xSize,ySize;
+        struct winsize w;
+        ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+        xSize=w.ws_col;
+        ySize=w.ws_row;
+        Ascii gfx(xSize,ySize,nullptr);
+        int i=0;
+        ClosePointDitherGenerator generator;
+        while(true)gfx.doPlasma(i++,&generator);
+    }
+
     if(argc!=3&&argc!=5){
-        printf("%s objFile format xSize ySize\nformat can be ppm,xpm,console,dither\n",argv[0]);
+        printf("%s objFile format xSize ySize\nformat can be ppm,xpm,console,dither\nor just call with plasma\n",argv[0]);
     }else{
         int xSize,ySize;
         if(argc==5){
