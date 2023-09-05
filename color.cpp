@@ -41,7 +41,7 @@ void Ascii::initMap(){
 }
 
 void Ascii::bitblit(ColorGenerator* generator){
-    static int t=0;
+    static int t=180;
     doSomething(t++);
     generator->output(sizeX,sizeY,bitmap);
 }
@@ -82,9 +82,10 @@ void Ascii::doSomething(int t){
               vec4(0.0,1.0,0.0,0.0),
               vec4(0.0,0.0,1.0,0.0)};
 
-    float r=(float)sizeX/sizeY;//ratio
-    mat4 m=mat4::translate(sizeX/2.0,sizeY/2.0,-0.1)*mat4::scale(0.8,0.8,1.0)*mat4::scale(sizeY,sizeY,1.0)*mat4::rotation(1,0,0,t);
-    mat4 mn=mat4::rotation(1,0,0,t);
+    //float r=(float)sizeX/sizeY;//ratio
+    const float char_ratio = 17.0/8.0;//char aspect ratio 
+    mat4 mn = mat4::rotation(1,0,0,t)*mat4::rotation(0,1,0,t/2.0-90.0);
+    mat4 m=mat4::translate(sizeX/2.0,sizeY/2.0,-0.1)*mat4::scale(sizeY*0.8,sizeY*0.8/char_ratio,1.0)*mn;
     for(int i=0;i<data.size()/6;i++){
         vec4 p[3];
         vec4 n[3];

@@ -81,9 +81,10 @@ ColorData ClosePointDitherGenerator::getGuess(double r,double g,double b){
     int n=rCoord.size();
     int m1=0,m2=0;
     for(int i=0;i<n;i++){
-        double dist=sqrt((r-rCoord[i])*(r-rCoord[i])+
-                         (g-gCoord[i])*(g-gCoord[i])+
-                         (b-bCoord[i])*(b-bCoord[i]));
+		double rd = r-rCoord[i];
+		double gd = g-gCoord[i];
+		double bd = b-bCoord[i];
+        double dist=sqrt(rd*rd+gd*gd+bd*bd);
         if(dist<=d){
             m1=i;
             d=dist;
@@ -92,20 +93,23 @@ ColorData ClosePointDitherGenerator::getGuess(double r,double g,double b){
     //can make this faster
     d=10;
     for(int i=0;i<n;i++){
-        double dist=sqrt((r-rCoord[i])*(r-rCoord[i])+
-                         (g-gCoord[i])*(g-gCoord[i])+
-                         (b-bCoord[i])*(b-bCoord[i]));
+		double rd = r-rCoord[i];
+		double gd = g-gCoord[i];
+		double bd = b-bCoord[i];
+        double dist=sqrt(rd*rd+gd*gd+bd*bd);
         if(dist<=d&&i!=m1){
             m2=i;
             d=dist;
         }
     }
-    double dm1=sqrt(rCoord[m1]*rCoord[m1]+
-                    gCoord[m1]*gCoord[m1]+
-                    bCoord[m1]*bCoord[m1]);
-    double dm2=sqrt(rCoord[m2]*rCoord[m2]+
-                    gCoord[m2]*gCoord[m2]+
-                    bCoord[m2]*bCoord[m2]);
+	double rm1 = rCoord[m1];
+	double gm1 = gCoord[m1];
+	double bm1 = bCoord[m1];
+	double rm2 = rCoord[m2];
+	double gm2 = gCoord[m2];
+	double bm2 = bCoord[m2];
+    double dm1=sqrt(rm1*rm1+gm1*gm1+bm1*bm1);
+    double dm2=sqrt(rm2*rm2+gm2*gm2+bm2*bm2);
     if(dm2<dm1){
         double aux=m1;
         m1=m2;

@@ -67,9 +67,10 @@ ColorData ClosePointGenerator::getGuess(double r,double g,double b){
     int n=rCoord.size();
     int m=0;
     for(int i=0;i<n;i++){
-        double dist=sqrt((r-rCoord[i])*(r-rCoord[i])+
-                         (g-gCoord[i])*(g-gCoord[i])+
-                         (b-bCoord[i])*(b-bCoord[i]));
+        double rd = r-rCoord[i];
+        double gd = g-gCoord[i];
+        double bd = b-bCoord[i];
+        double dist=sqrt(rd*rd+gd*gd+bd*bd);
         if(dist<=d){
             m=i;
             d=dist;
